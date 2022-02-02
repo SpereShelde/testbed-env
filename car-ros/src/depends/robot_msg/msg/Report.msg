@@ -1,0 +1,13 @@
+float32 voltage
+float32 throttle_a
+float32 throttle_b
+int32 servo
+float32 velocity_x
+float32 velocity_y
+float32 velocity_z
+float32 acceleration_x
+float32 acceleration_y
+float32 acceleration_z
+float32 angular_x
+float32 angular_y
+float32 angular_z
