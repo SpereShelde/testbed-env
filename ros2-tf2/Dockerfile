@@ -38,6 +38,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN echo "source /opt/ros/foxy/setup.bash" >> /root/.bashrc
 
+CMD ["source", "/opt/ros/foxy/setup.bash"]
+
 # END: ROS2 Foxy
 #####
 
@@ -68,5 +70,19 @@ EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
 
 # END: SSH
+#####
+
+#####
+# Build Robot Core
+
+ADD --chown=root:root core /home/core
+
+WORKDIR /home/core
+
+RUN ["colcon", "build"]
+
+RUN ["bash", "install/setup.bash"]
+
+# END: Build Robot Core
 #####
 
