@@ -70,6 +70,8 @@ RUN pip3 install tensorflow -f https://tf.kmtea.eu/whl/stable.html
 # END: Tf2
 #####
 
+SHELL ["/bin/bash", "-c"] 
+
 RUN source /opt/ros/foxy/setup.bash
 
 CMD ["/usr/sbin/sshd", "-D"]

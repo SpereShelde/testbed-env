@@ -62,6 +62,8 @@ EXPOSE 22
 # END: SSH
 #####
 
+SHELL ["/bin/bash", "-c"] 
+
 RUN source /opt/ros/foxy/setup.bash
 
 CMD ["/usr/sbin/sshd", "-D"]
