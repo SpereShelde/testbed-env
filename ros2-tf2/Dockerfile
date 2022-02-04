@@ -63,26 +63,6 @@ EXPOSE 22
 #####
 
 #####
-# Build Robot Core
-
-ADD --chown=root:root core /home/core
-
-WORKDIR /home/core
-
-SHELL ["/bin/bash", "-c"] 
-
-RUN rosdep install --from-paths src --ignore-src -y && \
-    source /opt/ros/foxy/setup.bash && colcon build && bash install/setup.bash
-
-# END: Build Robot Core
-#####
-
-CMD ["/usr/sbin/sshd", "-D"]
-
-# ENTRYPOINT service ssh restart && bash
-
-
-#####
 # Tf2
 
 RUN pip3 install tensorflow -f https://tf.kmtea.eu/whl/stable.html
@@ -90,4 +70,6 @@ RUN pip3 install tensorflow -f https://tf.kmtea.eu/whl/stable.html
 # END: Tf2
 #####
 
+RUN source /opt/ros/foxy/setup.bash
 
+CMD ["/usr/sbin/sshd", "-D"]

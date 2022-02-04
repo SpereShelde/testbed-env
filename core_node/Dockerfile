@@ -62,8 +62,23 @@ EXPOSE 22
 # END: SSH
 #####
 
-RUN source /opt/ros/foxy/setup.bash
+#####
+# Build Robot Core
+
+ADD --chown=root:root core /home/core
+
+WORKDIR /home/core
+
+SHELL ["/bin/bash", "-c"] 
+
+# RUN rosdep install --from-paths src --ignore-src -y && source /opt/ros/foxy/setup.bash && colcon build && bash install/setup.bash
+
+RUN source /opt/ros/foxy/setup.bash && colcon build && bash install/setup.bash
+
+# END: Build Robot Core
+#####
 
 CMD ["/usr/sbin/sshd", "-D"]
 
 # ENTRYPOINT service ssh restart && bash
+
