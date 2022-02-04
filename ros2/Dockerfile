@@ -77,7 +77,7 @@ RUN rosdep install --from-paths src --ignore-src -y && \
 # END: Build Robot Core
 #####
 
-# CMD ["/usr/sbin/sshd", "-D"]
+CMD ["/usr/sbin/sshd", "-D"]
 
-ENTRYPOINT service ssh restart && bash
+# ENTRYPOINT service ssh restart && bash
 

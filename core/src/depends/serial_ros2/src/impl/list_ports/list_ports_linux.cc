@@ -56,7 +56,7 @@ glob(const vector<string>& patterns)
 
     // int glob_retval = glob(patterns[0].c_str(), 0, NULL, &glob_results);
 
-    vector<string>::const_iterator iter = patterns.begin();
+    // vector<string>::const_iterator iter = patterns.begin();
 
     // while(++iter != patterns.end())
     // {
@@ -237,13 +237,13 @@ format(const char* format, ...)
     {
         va_start(ap, format);
 
-        size_t return_value = vsnprintf(buffer, buffer_size_bytes, format, ap);
+        int return_value = vsnprintf(buffer, buffer_size_bytes, format, ap);
 
         if( return_value < 0 )
         {
             done = true;
         }
-        else if( return_value >= buffer_size_bytes )
+        else if( (size_t)return_value >= buffer_size_bytes )
         {
             // Realloc and try again.
 

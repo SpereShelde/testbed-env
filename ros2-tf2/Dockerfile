@@ -34,21 +34,13 @@ RUN colcon mixin add default \
     colcon metadata update
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    ros-foxy-ros-base=0.9.2-1*
+    ros-foxy-ros-base=0.9.2-1* libroslib-dev ffmpeg libsm6 libxext6
 
 RUN echo "source /opt/ros/foxy/setup.bash" >> /root/.bashrc
 
-CMD ["source", "/opt/ros/foxy/setup.bash"]
+# CMD ["source", "/opt/ros/foxy/setup.bash"]
 
 # END: ROS2 Foxy
-#####
-
-#####
-# Tf2
-
-RUN pip3 install tensorflow -f https://tf.kmtea.eu/whl/stable.html
-
-# END: Tf2
 #####
 
 #####
@@ -63,11 +55,9 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
 
 RUN echo 'root:raspberry' | chpasswd
 
-RUN service ssh start
+# RUN service ssh start
 
 EXPOSE 22
-
-CMD ["/usr/sbin/sshd", "-D"]
 
 # END: SSH
 #####
@@ -79,10 +69,25 @@ ADD --chown=root:root core /home/core
 
 WORKDIR /home/core
 
-RUN ["colcon", "build"]
+SHELL ["/bin/bash", "-c"] 
 
-RUN ["bash", "install/setup.bash"]
+RUN rosdep install --from-paths src --ignore-src -y && \
+    source /opt/ros/foxy/setup.bash && colcon build && bash install/setup.bash
 
 # END: Build Robot Core
 #####
+
+CMD ["/usr/sbin/sshd", "-D"]
+
+# ENTRYPOINT service ssh restart && bash
+
+
+#####
+# Tf2
+
+RUN pip3 install tensorflow -f https://tf.kmtea.eu/whl/stable.html
+
+# END: Tf2
+#####
+
 
