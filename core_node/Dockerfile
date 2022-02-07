@@ -57,7 +57,7 @@ RUN echo 'root:raspberry' | chpasswd
 
 # RUN service ssh start
 
-EXPOSE 22
+# EXPOSE 22
 
 # END: SSH
 #####
@@ -78,7 +78,6 @@ RUN source /opt/ros/foxy/setup.bash && colcon build && bash install/setup.bash
 # END: Build Robot Core
 #####
 
-CMD ["/usr/sbin/sshd", "-D"]
+# CMD ["/usr/sbin/sshd", "-D"]
 
-# ENTRYPOINT service ssh restart && bash
-
+ENTRYPOINT ros2 run robot_core core_node
